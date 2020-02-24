@@ -1,10 +1,10 @@
 const winston = require('winston')
 const { Client } = require('discord.js-commando')
-const { LocaleProvider } = require('./language/en-US')
+const { English } = require('./language')
 
 module.exports = class extends Client {
   constructor (options) {
-    super(options.Client)
+    super(options)
 
     this.logger = winston.createLogger({
       transports: [new winston.transports.Console()],
@@ -14,6 +14,6 @@ module.exports = class extends Client {
       )
     })
 
-    this.locale = new LocaleProvider()
+    this.locale = new English()
   }
 }
