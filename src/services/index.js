@@ -1,4 +1,5 @@
 
 module.exports = {
-  CodeWars: require('./codewars')
+  CodeWars: require('./codewars'),
+  Discussion: require('./discussion')
 }

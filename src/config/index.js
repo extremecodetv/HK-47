@@ -8,7 +8,8 @@ module.exports = {
     Prefix: process.env.COMMAND_PREFIX
   },
   Discussion: {
-    Category: process.env.COMMAND_DISCUSSION_CATEGORY
+    Category: process.env.COMMAND_DISCUSSION_CATEGORY,
+    TimeOut: 15 * 60 * 1000
   },
   CodeWars: {
     Token: process.env.CODEWARS_TOKEN
