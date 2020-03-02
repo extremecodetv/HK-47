@@ -1,11 +1,11 @@
-const path = require('path')
-const Config = require('./config')
-const { Client } = require('./bot')
+(async () => {
+  const path = require('path')
+  const Config = require('./config')
+  const { Client } = require('./bot')
 
-const runner = async () => {
   const client = new Client({
     commandPrefix: Config.Command.Prefix,
-    // owner: OWNERS.split(','),
+    owner: Config.Owners,
     invite: false,
     disableEveryone: true,
     disabledEvents: ['TYPING_START']
@@ -13,16 +13,14 @@ const runner = async () => {
 
   client.registry
     .registerDefaultTypes()
-    .registerGroups([
-      ['util', 'Utility'],
-      ['discussion', 'Discussion']
-    ])
+    .registerGroups(require('./groups'))
     .registerDefaultCommands({
       help: false,
       ping: false,
       prefix: false,
       commandState: false,
-      unknownCommand: false
+      unknownCommand: false,
+      eval: false
     })
     .registerCommandsIn(path.join(__dirname, 'commands'))
 
@@ -31,11 +29,16 @@ const runner = async () => {
     process.exit(0)
   })
 
-  client.on('error', err => client.logger.error(err))
+  client.on('error', error => client.logger.error(error))
 
   client.on('warn', warn => client.logger.warn(warn))
 
-  client.on('commandError', (command, err) => client.logger.error(`[COMMAND:${command.name}]\n${err.stack}`))
-}
+  client.on('commandError', (command, error) => client.logger.error(`[COMMAND:${command.name}]\n${error.stack}`))
 
-runner()
+  process.on('uncaughtException', error => {
+    client.logger.error(`[UncaughtException]\n${error.stack}`)
+    process.exit(1)
+  })
+
+  client.login(Config.Token).then(() => client.logger.info('Connected'))
+})()
