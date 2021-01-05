@@ -16,7 +16,7 @@
   "author": "Artem Dontsov <extremecodetv@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "discord.js": "github:discordjs/discord.js",
     "discord.js-commando": "github:discordjs/Commando",
     "dotenv": "^8.2.0",
